@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS bamazon_DB;
 
 CREATE DATABASE bamazon_DB;
 
+USE bamazon_DB;
+
 CREATE TABLE products(
 id INT NOT NULL AUTO_INCREMENT,
 product VARCHAR(100) NOT NULL,
@@ -35,10 +37,13 @@ INSERT INTO products (product, department, price, quanity)
 VALUES ("Samsung Galaxy 7", "phones", 299, 5);
 
 INSERT INTO products (product, department, price, quanity)
-VALUES ("Samsung Galaxy 7", "phones", 299, 5);
+VALUES ("Thorstream", "kodi tuner", 499, 11);
 
 INSERT INTO products (product, department, price, quanity)
-VALUES ("Samsung Galaxy 7", "phones", 299, 5);
+VALUES ("QNAP DS4", "NAS", 475, 28);
 
 INSERT INTO products (product, department, price, quanity)
-VALUES ("Samsung Galaxy 7", "phones", 299, 5);
+VALUES ("Vizio 45", "televisions", 349, 16);
+
+INSERT INTO products (product, department, price, quanity)
+VALUES ("iMac 21 2017", "desktops", 949, 6);

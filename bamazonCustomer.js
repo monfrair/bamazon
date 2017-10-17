@@ -5,7 +5,7 @@ var inquirer = require("inquirer");
 // Create the Connection to the DB //
 var connection = mysql.createConnection({
     host: "localhost",
-    port: 8889,
+    port: 3306,
     
     user: "root",
     password: "root",
@@ -23,13 +23,17 @@ connection.connect(function(err){
 function showProducts() {
     connection.query('SELECT * FROM products', function(err, res){
         if (err) throw err;
-        console.log('-------------------------');
-        console.log('--------Items for sale----------');
-        console.log('-------------------------');
+
+        console.log('');
+        console.log('-------------Current Inventory---------------');
+        console.log('');
+    
         
         for (var i = 0; i < res.length; i++) {
-            console.log('Item ID: ' + res[i].id + 'Product Name: ' + res[i].product + 'Price: ' + res[i].price + 'Quanity Left: ' + res[i].quanity);
-            console.log('-------------------------');
+            console.log('Item ID: ' + res[i].id + '      Product: ' + res[i].product + '      Department: ' + res[i].department);
+            console.log('Price: ' + res[i].price + '      Quanity Left: ' + res[i].quanity);
+            console.log(' ');
+            console.log(' ');
         }
         
     })

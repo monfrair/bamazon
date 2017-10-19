@@ -107,12 +107,12 @@ function start() {
                     ///  testing app to check values of variables /////
                     ///////////////////////////////////////////////////////////////////////////
                     
-                    
-                    console.log(leftInStock + "  amount left in stock ******");
-                    console.log(itemBought + "  amount bought");
-                    console.log(res[0].price + "   price");
-                    console.log(res[0].price * itemBought + "  total price of items bought");
-                    console.log(answers.selectId + "  checking id number");
+//                    
+//                    console.log(leftInStock + "  amount left in stock ******");
+//                    console.log(itemBought + "  amount bought");
+//                    console.log(res[0].price + "   price");
+//                    console.log(res[0].price * itemBought + "  total price of items bought");
+//                    console.log(answers.selectId + "  checking id number");
                     
                     
                     ///////////////////////////////////////////////////////////////////////////

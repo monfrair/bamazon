@@ -68,6 +68,12 @@ function start() {
                     name: 'selectId',
                     type: 'input',
                     message: 'Enter ITEM ID for product you wish to purchase:',
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
 
         },
 
@@ -99,13 +105,21 @@ function start() {
                     var leftInStock = inStock - itemBought;
                     
                     ///  testing app to check values of variables /////
+                    ///////////////////////////////////////////////////////////////////////////
+                    
                     
                     console.log(leftInStock + "  amount left in stock ******");
                     console.log(itemBought + "  amount bought");
                     console.log(res[0].price + "   price");
                     console.log(res[0].price * itemBought + "  total price of items bought");
                     console.log(answers.selectId + "  checking id number");
+                    
+                    
+                    ///////////////////////////////////////////////////////////////////////////
                     ///  testing app to check values of variables /////
+                    
+                    var totalPrice = res[0].price * itemBought;
+                    console.log(totalPrice + "  total price of items bought");
                     
                     connection.query(
                         "UPDATE products SET ? WHERE ?", [
@@ -124,8 +138,6 @@ function start() {
                             console.log("==============================================");
                             console.log("\n\r");
                             console.log("Order Details");
-                            console.log("what the hell is going on????" + itemBought + " " + price);
-                            var totalPrice = res[0].price * itemBought;
                             console.log("Your Item(s) Cost: " + totalPrice);
                             console.log("\n\r");
                             console.log("==============================================");

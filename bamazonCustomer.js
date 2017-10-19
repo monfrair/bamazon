@@ -116,9 +116,11 @@ function start() {
                     
                     
                     ///////////////////////////////////////////////////////////////////////////
-                    ///  testing app to check values of variables /////
+                    /// END testing app to check values of variables /////
                     
                     var totalPrice = res[0].price * itemBought;
+                    var itemPurchased = res[0].product;
+                    
                     console.log(totalPrice + "  total price of items bought");
                     
                     connection.query(
@@ -137,8 +139,10 @@ function start() {
                             if (error) throw err;
                             console.log("==============================================");
                             console.log("\n\r");
-                            console.log("Order Details");
-                            console.log("Your Item(s) Cost: " + totalPrice);
+                            console.log("Order details:");
+                            console.log("Item(s) purchased: " + itemPurchased);
+                            console.log("Quanity purchased: " + itemBought + " @ $" + res[0].price);
+                            console.log("Total Cost: $" + totalPrice);
                             console.log("\n\r");
                             console.log("==============================================");
                             showProducts();

@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var inStock = 0;
 
 //-----------------------------------------------------------//
 // Create the Connection to the DB //
@@ -46,7 +47,7 @@ function showProducts() {
         }
         //call function to start the user prompt for shopping//
         start();
-    })
+    });
 }
 
 //-----------------------------------------------------------//
@@ -58,6 +59,8 @@ function showProducts() {
 // function to prompt user  on what they would like to do
 //-----------------------------------------------------------//
 function start() {
+    connection.query("SELECT * FROM products", function(err, res) {
+        if (err) throw console.log("connection error:" + err);
     inquirer
         .prompt([
                 {
@@ -82,7 +85,7 @@ function start() {
             ]).then (function (answers) {
             var query = "SELECT * FROM products WHERE ?";
             connection.query(query, {
-                selectId: answers.selectId
+                id: answers.selectId
             }, function (err, res) {
 
 
@@ -100,16 +103,17 @@ function start() {
                                 quanity: leftInStock
                         },
                             {
-                                selectId: answers.selectId
+                                id: answers.selectId
                         }
 
                     ],
                         function (error) {
+//                            console.log(price, amountBought);
                             if (error) throw err;
                             console.log("==============================================");
                             console.log("\n\r");
                             console.log("Order Details");
-                            var totalPrice = res[0].price * answers.units;
+                            var totalPrice = res[0].price * answers.itemBought;
                             console.log("Your Item(s) Cost: " + totalPrice);
                             console.log("\n\r");
                             console.log("==============================================");
@@ -130,4 +134,5 @@ function start() {
             });
         
         });// inquier.prompt
-    };// conection.query
+        });
+    }// conection.query

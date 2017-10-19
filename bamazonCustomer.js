@@ -144,6 +144,7 @@ function start() {
                             console.log("Quanity purchased: " + itemBought + " @ $" + res[0].price);
                             console.log("Total Cost: $" + totalPrice);
                             console.log("\n\r");
+                            console.log("Thank you for shopping at-fell off the truck online-");
                             console.log("==============================================");
                             showProducts();
 

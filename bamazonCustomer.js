@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var inStock = 0;
+var totalPrice = 0;
 
 //-----------------------------------------------------------//
 // Create the Connection to the DB //
@@ -96,11 +97,21 @@ function start() {
 
                 if (inStock >= itemBought) {
                     var leftInStock = inStock - itemBought;
-
+                    
+                    ///  testing app to check values of variables /////
+                    
+                    console.log(leftInStock + "  amount left in stock ******");
+                    console.log(itemBought + "  amount bought");
+                    console.log(res[0].price + "   price");
+                    console.log(res[0].price * itemBought + "  total price of items bought");
+                    console.log(answers.selectId + "  checking id number");
+                    ///  testing app to check values of variables /////
+                    
                     connection.query(
                         "UPDATE products SET ? WHERE ?", [
                             {
                                 quanity: leftInStock
+                                
                         },
                             {
                                 id: answers.selectId
@@ -113,7 +124,8 @@ function start() {
                             console.log("==============================================");
                             console.log("\n\r");
                             console.log("Order Details");
-                            var totalPrice = res[0].price * answers.itemBought;
+                            console.log("what the hell is going on????" + itemBought + " " + price);
+                            var totalPrice = res[0].price * itemBought;
                             console.log("Your Item(s) Cost: " + totalPrice);
                             console.log("\n\r");
                             console.log("==============================================");

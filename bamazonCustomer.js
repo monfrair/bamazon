@@ -44,7 +44,7 @@ function showProducts() {
             console.log(' ');
 
         }
-        //call function to start the user prompt and shopping//
+        //call function to start the user prompt for shopping//
         start();
     })
 }
@@ -60,46 +60,74 @@ function showProducts() {
 function start() {
     inquirer
         .prompt([
-            {
-                name: 'selectId',
-                type: 'input',
-                message: 'Enter ITEM ID for product you wish to purchase:',
+                {
+                    name: 'selectId',
+                    type: 'input',
+                    message: 'Enter ITEM ID for product you wish to purchase:',
 
         },
 
-            {
-                name: 'quanity',
-                type: 'input',
-                message: 'How many would you like?'
-            },
-          
-          ]).then(function (answers) {
+                {
+                    name: 'amountBought',
+                    type: 'input',
+                    message: 'How many would you like?',
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
+                   
+                }
+            ]).then (function (answers) {
+            var query = "SELECT * FROM products WHERE ?";
+            connection.query(query, {
+                selectId: answers.selectId
+            }, function (err, res) {
+
+
                 // get the information of the chosen item, set input to variables, pass variables as Parameters
-                var quanityBought = answers.quanity;
-                var itemBought = answers.selectId;
 
-                boughtFromDB(quanityBought, itemBought);
-          
-        });
-};
-    //
+                var inStock = res[0].quanity;
+                var itemBought = answers.amountBought;
 
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
+                if (inStock >= itemBought) {
+                    var leftInStock = inStock - itemBought;
+
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?", [
+                            {
+                                quanity: leftInStock
+                        },
+                            {
+                                selectId: answers.selectId
+                        }
+
+                    ],
+                        function (error) {
+                            if (error) throw err;
+                            console.log("==============================================");
+                            console.log("\n\r");
+                            console.log("Order Details");
+                            var totalPrice = res[0].price * answers.units;
+                            console.log("Your Item(s) Cost: " + totalPrice);
+                            console.log("\n\r");
+                            console.log("==============================================");
+                            showProducts();
+
+                        }
+                    );
+                } else {
+                    console.log("==============================================");
+                    console.log("\n\r");
+                    console.log("Not enough available, please choose a different quantity");
+                    console.log("\n\r");
+                    console.log("==============================================");
+                   showProducts();
+
+                }
+
+            });
+        
+        });// inquier.prompt
+    };// conection.query

@@ -3,9 +3,9 @@ var inquirer = require("inquirer");
 var inStock = 0;
 var totalPrice = 0;
 
-//-----------------------------------------------------------//
-// Create the Connection to the DB //
-//-----------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////  
+        //connect to the DB/////////
+    /////////////////////////////////////////////////////////////////////////// 
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -22,15 +22,14 @@ connection.connect(function (err) {
     // run start function after connection is made to prompt user
     showProducts();
 });
-//-----------------------------------------------------------//
-// end Connection to the DB //
-//-----------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////  
+        // end of connect to DB/////////
+    /////////////////////////////////////////////////////////////////////////// 
 
 
-
-//-----------------------------------------------------------//
-//function to display items for sale on the console
-//-----------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////  
+        // function to display all products to the console
+    /////////////////////////////////////////////////////////////////////////// 
 function showProducts() {
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err;
@@ -46,19 +45,20 @@ function showProducts() {
             console.log(' ');
 
         }
-        //call function to start the user prompt for shopping//
+        
         manageStore();
     });
 }
 
-//-----------------------------------------------------------//
-// end of function to display items for sale on the console
-//-----------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////  
+        // function to display all products to the console
+    /////////////////////////////////////////////////////////////////////////// 
 
 
-//-----------------------------------------------------------//
-// function to prompt user  on what they would like to do
-//-----------------------------------------------------------//
+  ///////////////////////////////////////////////////////////////////////////  
+        // inquirer function  add to direct code/////////
+    /////////////////////////////////////////////////////////////////////////// 
+                
 function manageStore() {
     connection.query("SELECT * FROM products", function (err, res) {
             if (err) throw console.log("connection error:" + err);
@@ -70,9 +70,18 @@ function manageStore() {
                         message: 'Choose an option below to manage inventory:',
                         choices: ["Add inventory", "Add a new product", "Remove a product", "Quit"]
 
-
         }
+     ///////////////////////////////////////////////////////////////////////////  
+        //  end inquirer function  add to direct code/////////
+    /////////////////////////////////////////////////////////////////////////// 
+                
+                
+                
 
+     ///////////////////////////////////////////////////////////////////////////  
+        //if else function to guide code/////////
+    /////////////////////////////////////////////////////////////////////////// 
+                
 
             ]).then(function (answers) {
                     if (answers.selectId === "Add inventory") {
@@ -88,7 +97,15 @@ function manageStore() {
                     }
                 });
 
-
+        ///////////////////////////////////////////////////////////////////////////  
+        // end of if else function to guide code/////////
+    /////////////////////////////////////////////////////////////////////////// 
+                
+        
+        ///////////////////////////////////////////////////////////////////////////  
+        //function  add to inventory/////////
+    /////////////////////////////////////////////////////////////////////////// 
+                
             function addInventory() {
               inquirer.prompt([
 
@@ -118,81 +135,66 @@ function manageStore() {
         //re-run display to show updated results
         showProducts();
     });
-}; //end restockDatabase
+}; 
+    ///////////////////////////////////////////////////////////////////////////  
+        //function  add to inventory/////////
+    /////////////////////////////////////////////////////////////////////////// 
+                
+        
+        ///////////////////////////////////////////////////////////////////////////  
+        //function  to add a new product
+    /////////////////////////////////////////////////////////////////////////// 
+        
+         function newProduct() {
+              inquirer.prompt([
 
-                //        
-                //        var query = "SELECT * FROM products WHERE ?";
-                //            connection.query(query, {
-                //                id: answers.selectId
-                //            }, function (err, res) {
-                //
-                //
-                //                // get the information of the chosen item, set input to variables, pass variables as Parameters
-                //
-                //                var inStock = res[0].quanity;
-                //                var itemBought = answers.amountBought;
-                //
-                //                if (inStock >= itemBought) {
-                //                    var leftInStock = inStock - itemBought;
-                //                    
-                //                    ///  testing app to check values of variables /////
-                //                    ///////////////////////////////////////////////////////////////////////////
-                //                    
-                ////                    
-                ////                    console.log(leftInStock + "  amount left in stock ******");
-                ////                    console.log(itemBought + "  amount bought");
-                ////                    console.log(res[0].price + "   price");
-                ////                    console.log(res[0].price * itemBought + "  total price of items bought");
-                ////                    console.log(answers.selectId + "  checking id number");
-                //                    
-                //                    
-                //                    ///////////////////////////////////////////////////////////////////////////
-                //                    /// END testing app to check values of variables /////
-                //                    
-                //                    var totalPrice = res[0].price * itemBought;
-                //                    var itemPurchased = res[0].product;
-                //                    
-                //                    console.log(totalPrice + "  total price of items bought");
-                //                    
-                //                    connection.query(
-                //                        "UPDATE products SET ? WHERE ?", [
-                //                            {
-                //                                quanity: leftInStock
-                //                                
-                //                        },
-                //                            {
-                //                                id: answers.selectId
-                //                        }
-                //
-                //                    ],
-                //                        function (error) {
-                ////                            console.log(price, amountBought);
-                //                            if (error) throw err;
-                //                            console.log("==============================================");
-                //                            console.log("\n\r");
-                //                            console.log("Order details:");
-                //                            console.log("Item(s) purchased: " + itemPurchased);
-                //                            console.log("Quanity purchased: " + itemBought + " @ $" + res[0].price);
-                //                            console.log("Total Cost: $" + totalPrice);
-                //                            console.log("\n\r");
-                //                            console.log("Thank you for shopping at-fell off the truck online-");
-                //                            console.log("==============================================");
-                //                            showProducts();
-                //
-                //                        }
-                //                    );
-                //                } else {
-                //                    console.log("==============================================");
-                //                    console.log("\n\r");
-                //                    console.log("Not enough available, please choose a different quantity");
-                //                    console.log("\n\r");
-                //                    console.log("==============================================");
-                //                   showProducts();
-                //
-                //                }
-                //
-                //            });
-                //        
-                //        });// inquier.prompt
+         {
+            name: 'name',
+            type: 'input',
+            message: "Name of new product?"
+        },
+                {
+            name: 'department',
+            type: 'input',
+            message: "Department?"
+        },
+                  {
+            name: 'price',
+            type: 'input',
+            message: "Price?"
+        },
+                  {
+            name: 'quanity',
+            type: 'input',
+            message: "quanity?"
+        },
+                  
+                  ]).then(function(answers) {
+        //set captured input as variables, pass variables as parameters.
+        var name = answers.name;
+        var department = answers.department;
+        var price = answers.price;
+        var quanity = answers.quanity;
+                  
+        addNewItemtoDB(name, department, price, quanity);
+    });
+}; 
+
+        function addNewItemtoDB(name, department, price, quanity) {
+//     if (error) { console.log(error) };
+  connection.query('INSERT INTO products (product, department, price, quanity) VALUES("' + name + '","' + department + '",' + price + ',' + quanity +  ')');
+            
+    
+        showProducts();
+  
+}; 
+        
+   ///////////////////////////////////////////////////////////////////////////  
+        // end of function  to add a new product
+    /////////////////////////////////////////////////////////////////////////// 
+        
+        
+
+               
             });
-    } // conection.query
+    } 

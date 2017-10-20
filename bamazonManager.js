@@ -193,6 +193,21 @@ function manageStore() {
         // end of function  to add a new product
     /////////////////////////////////////////////////////////////////////////// 
         
+        function deleteProduct(){
+            inquirer.prompt([{
+                name: "ID",
+                type: "input",
+                message: "Enter the ID number for the item you wish to remove?"
+            }]).then(function(answer){
+                var id = answer.ID;
+                deleteFromDB(id);
+            });
+        };
+        
+        function deleteFromDB(id){
+            connection.query("DELETE FROM products WHERE id =" + id);
+            showProducts();
+        }
         
 
                
